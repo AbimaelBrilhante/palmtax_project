@@ -2,6 +2,7 @@ from Consultas import consultas
 from tkinter import *
 
 
+
 class Application:
     def __init__(self, master=None):
         self.fonte = ("Verdana", "8","bold")
@@ -93,67 +94,73 @@ class Application:
         self.txtuf["width"] = 18
         self.txtuf["font"] = self.fonte
         self.txtuf.pack(side=LEFT)
-        self.txtuf.configure(bg='#333333', foreground='white')
+        self.txtuf.configure(bg='#bfbbbb', foreground='black')
+        self.lbluf.configure(bg='#333333', foreground='white')
 
-        self.lblcnpjcpf = Label(self.container3,
+        self.lblcodigomaterial = Label(self.container3,
         text="Código do Material:", font=self.fonte, width=20)
-        self.lblcnpjcpf.pack(side=LEFT)
+        self.lblcodigomaterial.pack(side=LEFT)
 
-        self.txtcnpjcpf = Entry(self.container3)
-        self.txtcnpjcpf["width"] = 18
-        self.txtcnpjcpf["font"] = self.fonte
-        self.txtcnpjcpf.pack(side=LEFT)
-        self.txtcnpjcpf.configure(bg='#333333', foreground='white')
+        self.txtcodigomaterial = Entry(self.container3)
+        self.txtcodigomaterial["width"] = 18
+        self.txtcodigomaterial["font"] = self.fonte
+        self.txtcodigomaterial.pack(side=LEFT)
+        self.txtcodigomaterial.configure(bg='#bfbbbb', foreground='black')
+        self.lblcodigomaterial.configure(bg='#333333', foreground='white')
 
-
-        self.lblcnpjcpf = Label(self.container4,
+        self.lblpalavrachave = Label(self.container4,
         text="Palavra Chave:", font=self.fonte, width=20)
-        self.lblcnpjcpf.pack(side=LEFT)
+        self.lblpalavrachave.pack(side=LEFT)
 
-        self.txtcnpjcpf = Entry(self.container4)
-        self.txtcnpjcpf["width"] = 18
-        self.txtcnpjcpf["font"] = self.fonte
-        self.txtcnpjcpf.pack(side=LEFT)
-        self.lblcnpjcpf.configure(bg='#333333', foreground='white')
+        self.txtpalavrachave = Entry(self.container4)
+        self.txtpalavrachave["width"] = 18
+        self.txtpalavrachave["font"] = self.fonte
+        self.txtpalavrachave.pack(side=LEFT)
+        self.lblpalavrachave.configure(bg='#333333', foreground='white')
+        self.txtpalavrachave.configure(bg='#bfbbbb', foreground='black')
 
 
-        self.lblcnpjcpf = Label(self.container5,
+        self.lblsegmento = Label(self.container5,
         text="Segmento:", font=self.fonte, width=20)
-        self.lblcnpjcpf.pack(side=LEFT)
+        self.lblsegmento.pack(side=LEFT)
 
-        self.txtcnpjcpf = Entry(self.container5)
-        self.txtcnpjcpf["width"] = 18
-        self.txtcnpjcpf["font"] = self.fonte
-        self.txtcnpjcpf.pack(side=LEFT)
-        self.lblcnpjcpf.configure(bg='#333333', foreground='white')
+        self.txtsegmento = Entry(self.container5)
+        self.txtsegmento["width"] = 18
+        self.txtsegmento["font"] = self.fonte
+        self.txtsegmento.pack(side=LEFT)
+        self.lblsegmento.configure(bg='#333333', foreground='white')
+        self.txtsegmento.configure(bg='#bfbbbb', foreground='black')
 
 
-        self.lblcnpjcpf = Label(self.container6,
+        self.lblncm = Label(self.container6,
         text="NCM:", font=self.fonte, width=20)
-        self.lblcnpjcpf.pack(side=LEFT)
+        self.lblncm.pack(side=LEFT)
 
-        self.txtcnpjcpf = Entry(self.container6)
-        self.txtcnpjcpf["width"] = 18
-        self.txtcnpjcpf["font"] = self.fonte
-        self.txtcnpjcpf.pack(side=LEFT)
-        self.lblcnpjcpf.configure(bg='#333333', foreground='white')
+        self.txtncm = Entry(self.container6)
+        self.txtncm["width"] = 18
+        self.txtncm["font"] = self.fonte
+        self.txtncm.pack(side=LEFT)
+        self.lblncm.configure(bg='#333333', foreground='white')
+        self.txtncm.configure(bg='#bfbbbb', foreground='black')
 
 
-        self.lblcnpjcpf = Label(self.container7,
+        self.lbltributacao = Label(self.container7,
         text="Tributação:", font=self.fonte, width=20)
-        self.lblcnpjcpf.pack(side=LEFT)
+        self.lbltributacao.pack(side=LEFT)
 
-        self.txtcnpjcpf = Entry(self.container7)
-        self.txtcnpjcpf["width"] = 18
-        self.txtcnpjcpf["font"] = self.fonte
-        self.txtcnpjcpf.pack(side=LEFT)
+        self.txttributacao = Entry(self.container7)
+        self.txttributacao["width"] = 18
+        self.txttributacao["font"] = self.fonte
+        self.txttributacao.pack(side=LEFT)
+        self.txttributacao.configure(bg='#bfbbbb', foreground='black')
+        self.lbltributacao.configure(bg='#333333', foreground='white')
 
 
 
-        self.bntAlterar = Button(self.container12, text="Consultar dados",
+        self.bntConsultar = Button(self.container12, text="Consultar dados",
         font=self.fonte, width=15,bg='#4c4c4c', foreground='white')
-        self.bntAlterar["command"] = self.consultar_dados()
-        self.bntAlterar.pack (side=LEFT)
+        self.bntConsultar["command"] = self.consultar_dados
+        self.bntConsultar.pack (side=LEFT)
 
         self.bntInsert = Button(self.container12, text="Importar dados",
         font=self.fonte, width=15,bg='#4c4c4c', foreground='white')
@@ -170,7 +177,18 @@ class Application:
         self.lblmsg.pack()
         self.lblmsg.configure(bg='#333333', foreground='white')
 
-        self.lblcnpjcpf.configure(bg='#333333', foreground='white')
+        self.lblresposta1 = Label(self.container14,width=80, height=5)
+        self.lblresposta1.pack()
+        self.txtresposta1 = Entry(self.container14)
+        self.txtresposta1.configure(bg='#bfbbbb', foreground='black')
+
+        self.scroll_bar = Scrollbar(self.lblresposta1)
+        self.scroll_bar.pack(side=RIGHT,fill=Y)
+        self.mylist = Listbox(self.lblresposta1,yscrollcommand=self.scroll_bar.set,width=80)
+        self.mylist.pack(side=LEFT, fill=BOTH)
+        self.scroll_bar.config(command=self.mylist.yview)
+        root.mainloop()
+
 
 
 
@@ -182,10 +200,26 @@ class Application:
         pass
 
     def consultar_dados(self):
-        user = consultas()
-        user.uf = self.txtuf.get()
-        print(user.uf)
-        print(self.txtuf.get())
+
+        con = StringVar
+        l_cliente1 = Label(self.mylist, textvariable=con)
+        l_cliente1.grid(row=10, column=10)
+
+        uf = (self.txtuf.get())
+        codigomaterial = (self.txtcodigomaterial.get())
+        palavrachave = (self.txtpalavrachave.get())
+        segmento = (self.txtsegmento.get())
+        ncm = (self.txtncm.get())
+        tributacao = (self.txttributacao.get())
+
+
+        cone = consultas.selectMaterial("self", uf, codigomaterial, palavrachave, segmento,"", ncm, tributacao)
+        con.set(cone)
+
+
+
+
+
 
 
 
@@ -198,4 +232,5 @@ frame.pack(expand=True, fill=BOTH)
 Application(root)
 root.mainloop()
 
-Application.consultar_dados("self")
+
+

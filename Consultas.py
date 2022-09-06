@@ -1,5 +1,5 @@
 from Dados import Dados
-from tabulate import tabulate
+import os
 
 
 class consultas(object):
@@ -79,10 +79,11 @@ class consultas(object):
           return "Ocorreu um erro na exclusão do usuário"
 
     def selectMaterial(self, uf = "*",material = "*",descricao_material="*",seg="*",grupo_mercadorias="*",ncm="*",tributacao="*"):
+        #os.system('cls') or None
         banco = Dados()
         c = banco.conexao.cursor()
         c.execute(f"select * from base_tributaria where "
-                  f"UF = '{uf}' AND "
+                  f"UF like '%{uf}%' AND "
                   f"MATERIAL LIKE '%{material}%' AND "
                   f"DESCRIÇÃO_MATERIAL like '%{descricao_material}%' AND "
                   f"SEG LIKE '%{seg}%' AND "
@@ -90,12 +91,18 @@ class consultas(object):
                   f"NCM like '%{ncm}%' AND "
                   f"TRIBUTAÇÃO like '%{tributacao}%'")
 
-        for linha in c.fetchall():
-            print(linha)
-            # self.uf = linha[0]
+        resposta = []
+        return [(linha[2],linha[1],print("\n")) for linha in c.fetchall()]
+
+
+
+
+
+
 
         c.close()
 
 
-con = consultas.selectMaterial("self","SP","","","","","","")
+#con = consultas.selectMaterial("self","","","","","","","")
+
 
