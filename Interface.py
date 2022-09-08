@@ -1,5 +1,7 @@
 from Consultas import consultas
 from tkinter import *
+import os
+import sys
 
 
 
@@ -94,7 +96,7 @@ class Application:
         self.txtuf["width"] = 18
         self.txtuf["font"] = self.fonte
         self.txtuf.pack(side=LEFT)
-        self.txtuf.configure(bg='#bfbbbb', foreground='black')
+        self.txtuf.configure(bg='#bfbbbb', foreground='black',border=2)
         self.lbluf.configure(bg='#333333', foreground='white')
 
         self.lblcodigomaterial = Label(self.container3,
@@ -105,7 +107,7 @@ class Application:
         self.txtcodigomaterial["width"] = 18
         self.txtcodigomaterial["font"] = self.fonte
         self.txtcodigomaterial.pack(side=LEFT)
-        self.txtcodigomaterial.configure(bg='#bfbbbb', foreground='black')
+        self.txtcodigomaterial.configure(bg='#bfbbbb', foreground='black',border=2)
         self.lblcodigomaterial.configure(bg='#333333', foreground='white')
 
         self.lblpalavrachave = Label(self.container4,
@@ -117,7 +119,7 @@ class Application:
         self.txtpalavrachave["font"] = self.fonte
         self.txtpalavrachave.pack(side=LEFT)
         self.lblpalavrachave.configure(bg='#333333', foreground='white')
-        self.txtpalavrachave.configure(bg='#bfbbbb', foreground='black')
+        self.txtpalavrachave.configure(bg='#bfbbbb', foreground='black',border=2)
 
 
         self.lblsegmento = Label(self.container5,
@@ -129,7 +131,7 @@ class Application:
         self.txtsegmento["font"] = self.fonte
         self.txtsegmento.pack(side=LEFT)
         self.lblsegmento.configure(bg='#333333', foreground='white')
-        self.txtsegmento.configure(bg='#bfbbbb', foreground='black')
+        self.txtsegmento.configure(bg='#bfbbbb', foreground='black',border=2)
 
 
         self.lblncm = Label(self.container6,
@@ -141,7 +143,7 @@ class Application:
         self.txtncm["font"] = self.fonte
         self.txtncm.pack(side=LEFT)
         self.lblncm.configure(bg='#333333', foreground='white')
-        self.txtncm.configure(bg='#bfbbbb', foreground='black')
+        self.txtncm.configure(bg='#bfbbbb', foreground='black',border=2)
 
 
         self.lbltributacao = Label(self.container7,
@@ -152,43 +154,66 @@ class Application:
         self.txttributacao["width"] = 18
         self.txttributacao["font"] = self.fonte
         self.txttributacao.pack(side=LEFT)
-        self.txttributacao.configure(bg='#bfbbbb', foreground='black')
+        self.txttributacao.configure(bg='#bfbbbb', foreground='black',border=2)
         self.lbltributacao.configure(bg='#333333', foreground='white')
 
 
 
         self.bntConsultar = Button(self.container12, text="Consultar dados",
-        font=self.fonte, width=15,bg='#4c4c4c', foreground='white')
+        font=self.fonte, width=15,bg='#4c4c4c', foreground='white',border=3)
         self.bntConsultar["command"] = self.consultar_dados
         self.bntConsultar.pack (side=LEFT)
 
         self.bntInsert = Button(self.container12, text="Importar dados",
-        font=self.fonte, width=15,bg='#4c4c4c', foreground='white')
+        font=self.fonte, width=15,bg='#4c4c4c', foreground='white',border=3)
         self.bntInsert["command"] = self.importar_dados()
         self.bntInsert.pack (side=LEFT)
 
         self.bntAlterar = Button(self.container12, text="Exportar dados",
-        font=self.fonte, width=15,bg='#4c4c4c', foreground='white')
+        font=self.fonte, width=15,bg='#4c4c4c', foreground='white',border=3)
         self.bntAlterar["command"] = self.exportar_dados()
         self.bntAlterar.pack (side=LEFT)
+
+        self.bntLimpar = Button(self.container12, text="Limpar dados",
+        font=self.fonte, width=15,bg='#4c4c4c', foreground='white',border=3)
+        self.bntLimpar["delete"] = self.limpar_dados()
+        self.bntLimpar.pack (side=LEFT)
 
         self.lblmsg = Label(self.container13, text="")
         self.lblmsg["font"] = ("Verdana", "9", "italic")
         self.lblmsg.pack()
         self.lblmsg.configure(bg='#333333', foreground='white')
 
+        options = (
+            "Recebedoria",
+            "Fiscal",
+            "Comercial",
+            "Custos",
+            "Geral",
+        )
+
+
+        self.clicked = StringVar(self.container13)
+        self.clicked.set("Escolha o tipo de visualização")
+        self.drop = OptionMenu(self.container13, self.clicked, *options)
+        self.drop.pack()
+        self.drop.configure(bg='#4c4c4c', foreground='white',border=2)
+        self.drop["font"] = ("Verdana", "8", "bold")
+
+
+
         self.lblresposta1 = Label(self.container14,width=80, height=5)
         self.lblresposta1.pack()
         self.txtresposta1 = Entry(self.container14)
-        self.txtresposta1.configure(bg='#bfbbbb', foreground='black')
+        self.txtresposta1.configure(bg='#bfbbbb', foreground='black',border=2)
 
         self.scroll_bar = Scrollbar(self.lblresposta1)
         self.scroll_bar.pack(side=RIGHT,fill=Y)
         self.mylist = Listbox(self.lblresposta1,yscrollcommand=self.scroll_bar.set,width=80)
-        self.mylist.pack(side=LEFT, fill=BOTH)
-        self.scroll_bar.config(command=self.mylist.yview)
+        self.mylist.pack(side=RIGHT, fill=BOTH)
+        self.scroll_bar.configure(command=self.mylist.yview,bg='#4c4c4c')
+        self.mylist.configure(bg='#eeeeee', foreground='white',)
         root.mainloop()
-
 
 
 
@@ -203,7 +228,12 @@ class Application:
 
         con = StringVar
         l_cliente1 = Label(self.mylist, textvariable=con)
-        l_cliente1.grid(row=10, column=10)
+        l_cliente1.grid(row=0, column=0)
+        l_cliente1.forget()
+        self.mylist.delete(0, END)
+        self.txtresposta1.delete(0,END)
+
+
 
         uf = (self.txtuf.get())
         codigomaterial = (self.txtcodigomaterial.get())
@@ -211,10 +241,21 @@ class Application:
         segmento = (self.txtsegmento.get())
         ncm = (self.txtncm.get())
         tributacao = (self.txttributacao.get())
-
-
         cone = consultas.selectMaterial("self", uf, codigomaterial, palavrachave, segmento,"", ncm, tributacao)
-        con.set(cone)
+
+        for i in cone:
+            Label(l_cliente1, text="● " + i).pack()
+        root.mainloop()
+        print(cone)
+
+
+
+    def limpar_dados(self):
+
+        pass
+
+
+
 
 
 
@@ -228,7 +269,7 @@ root = Tk()
 frame = Frame()
 root.title('PalmTax')
 root.configure(bg='#333333')
-frame.pack(expand=True, fill=BOTH)
+frame.pack(expand=False, fill=BOTH)
 Application(root)
 root.mainloop()
 

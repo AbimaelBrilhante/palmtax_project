@@ -85,14 +85,18 @@ class consultas(object):
         c.execute(f"select * from base_tributaria where "
                   f"UF like '%{uf}%' AND "
                   f"MATERIAL LIKE '%{material}%' AND "
-                  f"DESCRIÇÃO_MATERIAL like '%{descricao_material}%' AND "
+                  f"DESCRIÇÃO_MATERIAL like '%{str(descricao_material)}%' AND "
                   f"SEG LIKE '%{seg}%' AND "
                   f"GRUPO_MERCADORIAS like '%{grupo_mercadorias}%' AND "
                   f"NCM like '%{ncm}%' AND "
                   f"TRIBUTAÇÃO like '%{tributacao}%'")
-
+#'("UF","CÓDIGO DO MATERIAL","DESCRIÇÃO DO MATERIAL","SEGMENTO","GRUPO DE MERCADORIAS","NCM","TRIBUTAÇÃO")'
         resposta = []
-        return [(linha[2],linha[1],print("\n")) for linha in c.fetchall()]
+        for linha in c.fetchall():
+            linha = str(linha[0] +" | "+ linha[1]+" | "+linha[3] +" | "+linha[6]+" | "+str(linha[8]))
+            resposta.append(linha)
+        return(resposta)
+
 
 
 
