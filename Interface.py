@@ -2,7 +2,9 @@ from Consultas import consultas
 from tkinter import *
 import os
 import sys
-
+import subprocess
+import webbrowser
+import time
 
 
 class Application:
@@ -166,18 +168,23 @@ class Application:
 
         self.bntInsert = Button(self.container12, text="Importar dados",
         font=self.fonte, width=15,bg='#4c4c4c', foreground='white',border=3)
-        self.bntInsert["command"] = self.importar_dados()
+        self.bntInsert["command"] = self.importar_dados
         self.bntInsert.pack (side=LEFT)
 
         self.bntAlterar = Button(self.container12, text="Exportar dados",
         font=self.fonte, width=15,bg='#4c4c4c', foreground='white',border=3)
-        self.bntAlterar["command"] = self.exportar_dados()
+        self.bntAlterar["command"] = self.exportar_dados
         self.bntAlterar.pack (side=LEFT)
 
         self.bntLimpar = Button(self.container12, text="Limpar dados",
         font=self.fonte, width=15,bg='#4c4c4c', foreground='white',border=3)
-        self.bntLimpar["delete"] = self.limpar_dados()
+        self.bntLimpar["command"] = self.outro
         self.bntLimpar.pack (side=LEFT)
+
+        self.bntChat = Button(root, text="Chat com célula de Estudos",
+        font=self.fonte, width=25, bg='#DCDCDC', foreground='black', border=3)
+        self.bntChat["command"] = self.chatestudos
+        self.bntChat.pack(side=LEFT)
 
         self.lblmsg = Label(self.container13, text="")
         self.lblmsg["font"] = ("Verdana", "9", "italic")
@@ -202,23 +209,7 @@ class Application:
 
 
 
-        self.lblresposta1 = Label(self.container14,width=80, height=5)
-        self.lblresposta1.pack()
-        self.txtresposta1 = Entry(self.container14)
-        self.txtresposta1.configure(bg='#bfbbbb', foreground='black',border=2)
-
-        self.scroll_bar = Scrollbar(self.lblresposta1)
-        self.scroll_bar.pack(side=RIGHT,fill=Y)
-        self.mylist = Listbox(self.lblresposta1,yscrollcommand=self.scroll_bar.set,width=80)
-        self.mylist.pack(side=RIGHT, fill=BOTH)
-        self.scroll_bar.configure(command=self.mylist.yview,bg='#4c4c4c')
-        self.mylist.configure(bg='#eeeeee', foreground='white',)
-        root.mainloop()
-
-
-
     def importar_dados(self):
-
         pass
 
     def exportar_dados(self):
@@ -226,15 +217,23 @@ class Application:
 
     def consultar_dados(self):
 
-        con = StringVar
+        self.lblresposta1 = Label(self.container14,width=80, height=5)
+        self.lblresposta1.pack()
+        self.txtresposta1 = Entry(self.container14)
+        self.txtresposta1.configure(bg='#bfbbbb', foreground='black',border=2)
+
+        self.scroll_bar = Scrollbar(self.lblresposta1)
+        self.scroll_bar.pack(side=RIGHT, fill=Y)
+        self.mylist = Listbox(self.lblresposta1,width=80)
+
+        self.mylist.pack(side=RIGHT, fill=BOTH)
+        self.mylist.configure(bg='#eeeeee', foreground='white',)
+
+        self.mylist.pack()
+        self.scroll_bar.pack()
+        con = StringVar()
         l_cliente1 = Label(self.mylist, textvariable=con)
         l_cliente1.grid(row=0, column=0)
-        l_cliente1.forget()
-        self.mylist.delete(0, END)
-        self.txtresposta1.delete(0,END)
-
-
-
         uf = (self.txtuf.get())
         codigomaterial = (self.txtcodigomaterial.get())
         palavrachave = (self.txtpalavrachave.get())
@@ -245,13 +244,22 @@ class Application:
 
         for i in cone:
             Label(l_cliente1, text="● " + i).pack()
-        root.mainloop()
         print(cone)
 
 
-
     def limpar_dados(self):
+        pass
 
+    def outro(self):
+        self.mylist.pack_forget()
+
+        #self.l_cliente.configure(text="")
+        #self.mylist.place(x=50,y=50)
+
+
+
+    def chatestudos(self):
+        webbrowser.open('https://mail.google.com/chat/u/0/?zx=vm4xeof813n7#chat/space/AAAAwoBbS_k')
         pass
 
 
@@ -269,7 +277,7 @@ root = Tk()
 frame = Frame()
 root.title('PalmTax')
 root.configure(bg='#333333')
-frame.pack(expand=False, fill=BOTH)
+frame.pack(expand=True, fill=BOTH)
 Application(root)
 root.mainloop()
 

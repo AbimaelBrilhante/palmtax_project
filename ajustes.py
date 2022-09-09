@@ -1,26 +1,82 @@
+#JOGO PEDRA-PAPEL-TESOURA
+#TKINTER MODULE
+
 from tkinter import *
+import random
+
+
+ppt = ['pedra', 'papel', 'tesoura']
+res = 'JOGAR'
 
 root = Tk()
-root.geometry("150x200")
+root.geometry('800x600')
+root.title('ROCK - PAPER - SCISSORS')
 
-w = Label(root, text='GeeksForGeeks',
-          font="50")
+frame_texto = Frame(root)
+frame_texto.pack(side=BOTTOM)
+frame_texto.place(height=100, width=200, x=300, y=300)
 
-w.pack()
+# Creias 1 vez a label
+texto = Label(frame_texto, text= res, fg='red', font=('Times New Roman', 40))
+texto.pack()
 
-scroll_bar = Scrollbar(root)
+# Aqui só modificas o texto da Label texto
+def res_texto(res):
+    texto.config(text=res)
 
-scroll_bar.pack(side=RIGHT,
-                fill=Y)
+def jogar_pedra(event):
+    x = random.choice(ppt)
+    if x == 'pedra':
+        res = 'EMPATE'
+        res_texto(res)
+    elif x == 'papel':
+        res = 'PERDEU'
+        res_texto(res)
+    elif x == 'tesoura':
+        res = 'GANHOU'
+        res_texto(res)
 
-mylist = Listbox(root,
-                 yscrollcommand=scroll_bar.set)
+def jogar_papel(event):
+    x = random.choice(ppt)
+    if x == 'pedra':
+        res = 'GANHOU'
+        res_texto(res)
+    elif x == 'papel':
+        res = 'EMPATE'
+        res_texto(res)
+    elif x == 'tesoura':
+        res = 'PERDEU'
+        res_texto(res)
 
-for line in range(1, 26):
-    mylist.insert(END, "Geeks " + str(line))
+def jogar_tesoura(event):
+    x = random.choice(ppt)
+    if x == 'pedra':
+        res = 'PERDEU'
+        res_texto(res)
+    elif x == 'papel':
+        res = 'GANHOU'
+        res_texto(res)
+    elif x == 'tesoura':
+        res = 'EMPATE'
+        res_texto(res)
 
-mylist.pack(side=LEFT, fill=BOTH)
 
-scroll_bar.config(command=mylist.yview)
+instrucoes = Label(root, text='Escolha pedra, papel ou tesoura', font = ('Times New Roman', 20), fg='black')
+instrucoes.pack()
+
+pedra = Button(root, text='Pedra', font=(30))
+pedra.bind('<Button-1>', jogar_pedra)
+pedra.pack()
+pedra.place(x=250, y=100)
+
+papel = Button(root, text='Papel', font=(30))
+papel.bind('<Button-1>', jogar_papel)
+papel.pack()
+papel.place(x= 350, y=100)
+
+tesoura = Button(root, text='Tesoura', font=(30))
+tesoura.bind('<Button-1>', jogar_tesoura)
+tesoura.pack()
+tesoura.place(x=450, y=100)
 
 root.mainloop()

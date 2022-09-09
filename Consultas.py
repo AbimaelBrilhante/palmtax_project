@@ -91,9 +91,9 @@ class consultas(object):
                   f"NCM like '%{ncm}%' AND "
                   f"TRIBUTAÇÃO like '%{tributacao}%'")
 #'("UF","CÓDIGO DO MATERIAL","DESCRIÇÃO DO MATERIAL","SEGMENTO","GRUPO DE MERCADORIAS","NCM","TRIBUTAÇÃO")'
-        resposta = []
+        resposta = ['("UF","MATERIAL","SEG","NCM","CEST","ALIQUOTA")']
         for linha in c.fetchall():
-            linha = str(linha[0] +" | "+ linha[1]+" | "+linha[3] +" | "+linha[6]+" | "+str(linha[8]))
+            linha = str(linha[0] +" | "+ linha[1]+" | "+linha[3] +" | "+linha[6]+" | "+linha[7]+" | "+linha[9]+" | ")
             resposta.append(linha)
         return(resposta)
 
