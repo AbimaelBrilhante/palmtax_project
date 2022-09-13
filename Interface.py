@@ -1,10 +1,12 @@
 from Consultas import consultas
 from tkinter import *
+import tkinter as tk
 import os
 import sys
 import subprocess
 import webbrowser
 import time
+from tkinter import messagebox as tkm
 
 
 class Application:
@@ -13,6 +15,7 @@ class Application:
 
         self.container1 = Frame(master)
         self.container1["pady"] = 10
+        self.container1["padx"] = 400
         self.container1.pack()
         self.container1.configure(bg='#333333')
         self.container2 = Frame(master)
@@ -163,7 +166,7 @@ class Application:
 
         self.bntConsultar = Button(self.container12, text="Consultar dados",
         font=self.fonte, width=15,bg='#4c4c4c', foreground='white',border=3)
-        self.bntConsultar["command"] = self.consultar_dados
+        self.bntConsultar["command"] = self.outro
         self.bntConsultar.pack (side=LEFT)
 
         self.bntInsert = Button(self.container12, text="Importar dados",
@@ -178,10 +181,10 @@ class Application:
 
         self.bntLimpar = Button(self.container12, text="Limpar dados",
         font=self.fonte, width=15,bg='#4c4c4c', foreground='white',border=3)
-        self.bntLimpar["command"] = self.outro
+        self.bntLimpar["command"] = self.limpar_dados
         self.bntLimpar.pack (side=LEFT)
 
-        self.bntChat = Button(root, text="Chat com célula de Estudos",
+        self.bntChat = Button(self.container15, text="Chat com célula de Estudos",
         font=self.fonte, width=25, bg='#DCDCDC', foreground='black', border=3)
         self.bntChat["command"] = self.chatestudos
         self.bntChat.pack(side=LEFT)
@@ -210,48 +213,86 @@ class Application:
 
 
     def importar_dados(self):
-        pass
+        from tkinter import messagebox
+        messagebox.showinfo("PalmTax", "Função disponível somente na versão PRO do PalmTax")
 
     def exportar_dados(self):
-        pass
+        from tkinter import messagebox
+        messagebox.showinfo("PalmTax", "Função disponível somente na versão PRO do PalmTax")
 
     def consultar_dados(self):
+        self.container14 = Frame(master=None)
+        self.container14["padx"] = 20
+        self.container14["pady"] = 10
+        self.container14.pack()
+        self.container14.configure(bg='#333333')
 
-        self.lblresposta1 = Label(self.container14,width=80, height=5)
-        self.lblresposta1.pack()
-        self.txtresposta1 = Entry(self.container14)
-        self.txtresposta1.configure(bg='#bfbbbb', foreground='black',border=2)
+        if self.clicked.get() == "Comercial":
+            uf = (self.txtuf.get())
+            codigomaterial = (self.txtcodigomaterial.get())
+            palavrachave = (self.txtpalavrachave.get())
+            segmento = (self.txtsegmento.get())
+            ncm = (self.txtncm.get())
+            tributacao = (self.txttributacao.get())
+            cone = consultas.selectMaterial("self", uf, codigomaterial, palavrachave, segmento,"", ncm, tributacao)
+            x = 0
+            y = 0
+            for i in range(len(cone)):
+                for j in range(1):
+                    frame = tk.Label(
+                        self.container14,
 
-        self.scroll_bar = Scrollbar(self.lblresposta1)
-        self.scroll_bar.pack(side=RIGHT, fill=Y)
-        self.mylist = Listbox(self.lblresposta1,width=80)
+                        anchor='w',
+                        relief=tk.RAISED,
+                        # padx=100,
+                        borderwidth=1
 
-        self.mylist.pack(side=RIGHT, fill=BOTH)
-        self.mylist.configure(bg='#eeeeee', foreground='white',)
+                    )
 
-        self.mylist.pack()
-        self.scroll_bar.pack()
-        con = StringVar()
-        l_cliente1 = Label(self.mylist, textvariable=con)
-        l_cliente1.grid(row=0, column=0)
-        uf = (self.txtuf.get())
-        codigomaterial = (self.txtcodigomaterial.get())
-        palavrachave = (self.txtpalavrachave.get())
-        segmento = (self.txtsegmento.get())
-        ncm = (self.txtncm.get())
-        tributacao = (self.txttributacao.get())
-        cone = consultas.selectMaterial("self", uf, codigomaterial, palavrachave, segmento,"", ncm, tributacao)
+                    frame.grid(row=i, column=j)
+                    self.label = tk.Label(master=frame, text=f'{cone[x].ljust(60)} |', anchor='w')
+                    self.label.configure(font=("Courier", "10"))
+                    x += 1
+                    y += 1
+                    self.label.pack(fill=tk.X, side=LEFT)
 
-        for i in cone:
-            Label(l_cliente1, text="● " + i).pack()
-        print(cone)
+        else:
+            self.lblresposta1 = Label(self.container14, width=8, height=5)
+            self.lblresposta1.pack()
+            self.txtresposta1 = Entry(self.container14)
+            self.txtresposta1.configure(bg='#bfbbbb', foreground='black', border=0)
+            self.scroll_bar = Label(self.lblresposta1, bg='#333333')
+            self.scroll_bar.pack(side=RIGHT)
+            self.mylist = Listbox(self.lblresposta1, width=0)
+
+            self.mylist.pack(side=RIGHT, fill=BOTH)
+            self.mylist.configure(bg='#eeeeee', foreground='white', )
+            con = StringVar()
+            l_cliente1 = Label(self.mylist, textvariable=con)
+            l_cliente1.grid(row=0, column=0)
+            Label(l_cliente1, text="Layout disponível somente na versão PRO do PalmTax",font=("Courier","12","bold"),bg='#FA8072').pack()
 
 
     def limpar_dados(self):
-        pass
+        try:
+            self.label.pack_forget()
+            self.container14.pack_forget()
+        except:
+            self.container14.pack_forget()
+        #self.mylist.pack_forget()
+        #self.scroll_bar.pack_forget()
+        #self.lblresposta1.pack_forget()
+
 
     def outro(self):
-        self.mylist.pack_forget()
+        try:
+            self.limpar_dados()
+            self.consultar_dados()
+        except:
+            self.consultar_dados()
+
+
+
 
         #self.l_cliente.configure(text="")
         #self.mylist.place(x=50,y=50)
@@ -261,15 +302,6 @@ class Application:
     def chatestudos(self):
         webbrowser.open('https://mail.google.com/chat/u/0/?zx=vm4xeof813n7#chat/space/AAAAwoBbS_k')
         pass
-
-
-
-
-
-
-
-
-
 
 
 
