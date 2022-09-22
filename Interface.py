@@ -1,18 +1,12 @@
 from Consultas import consultas
 from tkinter import *
 import tkinter as tk
-import os
-import sys
-import subprocess
 import webbrowser
-import time
-from tkinter import messagebox as tkm
 
 
 class Application:
     def __init__(self, master=None):
         self.fonte = ("Verdana", "8","bold")
-
         self.container1 = Frame(master)
         self.container1["pady"] = 10
         self.container1["padx"] = 400
@@ -126,7 +120,6 @@ class Application:
         self.lblpalavrachave.configure(bg='#333333', foreground='white')
         self.txtpalavrachave.configure(bg='#bfbbbb', foreground='black',border=2)
 
-
         self.lblsegmento = Label(self.container5,
         text="Segmento:", font=self.fonte, width=20)
         self.lblsegmento.pack(side=LEFT)
@@ -137,7 +130,6 @@ class Application:
         self.txtsegmento.pack(side=LEFT)
         self.lblsegmento.configure(bg='#333333', foreground='white')
         self.txtsegmento.configure(bg='#bfbbbb', foreground='black',border=2)
-
 
         self.lblncm = Label(self.container6,
         text="NCM:", font=self.fonte, width=20)
@@ -150,7 +142,6 @@ class Application:
         self.lblncm.configure(bg='#333333', foreground='white')
         self.txtncm.configure(bg='#bfbbbb', foreground='black',border=2)
 
-
         self.lbltributacao = Label(self.container7,
         text="Tributação:", font=self.fonte, width=20)
         self.lbltributacao.pack(side=LEFT)
@@ -161,7 +152,6 @@ class Application:
         self.txttributacao.pack(side=LEFT)
         self.txttributacao.configure(bg='#bfbbbb', foreground='black',border=2)
         self.lbltributacao.configure(bg='#333333', foreground='white')
-
 
 
         self.bntConsultar = Button(self.container12, text="Consultar dados",
@@ -202,7 +192,6 @@ class Application:
             "Geral",
         )
 
-
         self.clicked = StringVar(self.container13)
         self.clicked.set("Escolha o tipo de visualização")
         self.drop = OptionMenu(self.container13, self.clicked, *options)
@@ -241,12 +230,9 @@ class Application:
                 for j in range(1):
                     frame = tk.Label(
                         self.container14,
-
                         anchor='w',
                         relief=tk.RAISED,
-                        # padx=100,
                         borderwidth=1
-
                     )
 
                     frame.grid(row=i, column=j)
@@ -279,9 +265,7 @@ class Application:
             self.container14.pack_forget()
         except:
             self.container14.pack_forget()
-        #self.mylist.pack_forget()
-        #self.scroll_bar.pack_forget()
-        #self.lblresposta1.pack_forget()
+
 
 
     def outro(self):
@@ -291,27 +275,19 @@ class Application:
         except:
             self.consultar_dados()
 
-
-
-
-        #self.l_cliente.configure(text="")
-        #self.mylist.place(x=50,y=50)
-
-
-
     def chatestudos(self):
         webbrowser.open('https://mail.google.com/chat/u/0/?zx=vm4xeof813n7#chat/space/AAAAwoBbS_k')
         pass
 
+if __name__ == "__main__":
 
-
-root = Tk()
-frame = Frame()
-root.title('PalmTax')
-root.configure(bg='#333333')
-frame.pack(expand=True, fill=BOTH)
-Application(root)
-root.mainloop()
+    root = Tk()
+    frame = Frame()
+    root.title('PalmTax')
+    root.configure(bg='#333333')
+    frame.pack(expand=True, fill=BOTH)
+    Application(root)
+    root.mainloop()
 
 
 

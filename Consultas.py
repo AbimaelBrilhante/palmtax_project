@@ -1,9 +1,7 @@
 from Dados import Dados
-import os
 
 
 class consultas(object):
-
 
     def __init__(self, uf = "", material = "",descricao_material = "",seg = "",grupo_mercadorias = "",
                  origem = "",ncm = "",cest="",tributacao = "", aliq_int = "",red_bc = "",mva_pratic=""):
@@ -79,7 +77,7 @@ class consultas(object):
           return "Ocorreu um erro na exclusão do usuário"
 
     def selectMaterial(self, uf = "*",material = "*",descricao_material="*",seg="*",grupo_mercadorias="*",ncm="*",tributacao="*"):
-        #os.system('cls') or None
+
         banco = Dados()
         c = banco.conexao.cursor()
         c.execute(f"select * from base_tributaria where "
@@ -90,18 +88,16 @@ class consultas(object):
                   f"GRUPO_MERCADORIAS like '%{grupo_mercadorias}%' AND "
                   f"NCM like '%{ncm}%' AND "
                   f"TRIBUTAÇÃO like '%{tributacao}%'")
-#'("UF","CÓDIGO DO MATERIAL","DESCRIÇÃO DO MATERIAL","SEGMENTO","GRUPO DE MERCADORIAS","NCM","TRIBUTAÇÃO")'
+
 
         resposta = [f'UF | MATERIAL |                DESCRIÇÃO MATERIAL            |     NCM    |   CEST    | ALIQ |  MVA   ']
         for linha in c.fetchall():
             linha = str(linha[0]+" | "+linha[1]+" | "+linha[2]).strip().ljust(60)+" | "+linha[6]+" | "+linha[7]+" | "+linha[9]+" | "+linha[11].center(7)
             resposta.append(linha)
-            #print(linha)
         return(resposta)
 
 
         c.close()
-
 
 con = consultas.selectMaterial("self","","","","","","","")
 
