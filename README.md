@@ -1,6 +1,6 @@
 # palmtax_project
 
-Projeto de app para mapa tributário construído para a 3c em python com tkinter e sqlite
+Projeto de app para mapa tributário construído em python com tkinter e sqlite
 
 Consulta da tributação de diversos produtos a partir do nome, codigo, segmento, tipo de tributação, uf ...
 
